@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 const mongoose = require("mongoose");
@@ -14,9 +15,10 @@ const path = require("path");
 
 dotenv.config();
 app.use(express.json());
+app.use(cors());
 app.use("/images",express.static(path.join(__dirname,"/images")))
 
-mongoose.connect("https://jkfdnvjndfv").then(console.log("Connected to monogodb")).catch((err) => console.log(err));
+mongoose.connect(process.env.MONGO_URL).then(console.log("Connected to monogodb")).catch((err) => console.log(err));
 
 const storage = multer.diskStorage(
     destination: (req,file,cb)=>{
